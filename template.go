@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"net/http"
 	"log"
+	"os"
 )
 
 type Button struct {
@@ -20,11 +21,18 @@ type PageVariables struct {
 	Answer			string
 }
 
+func getPort() string {
+		p := os.Getenv("PORT")
+		if p != "" {
+				return ":" + p
+		}
+		return ":8000"
+}
 
 func main() {
 	http.HandleFunc("/", DisplayButtuons)
 	http.HandleFunc("/selected", UserSelected)
-	log.Fatal(http.ListenAndServe(":8000", nil)) 
+	log.Fatal(http.ListenAndServe(getPort(), nil)) 
 }
 
 
